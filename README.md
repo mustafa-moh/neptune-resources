@@ -119,6 +119,6 @@ docker-compose down -v
 
 ## Additional Resources
 
-- [Neptune Software Documentation](https://docs.neptune-software.com/)
-- [Docker Documentation](https://docs.docker.com/)
+- [Neptune DXP - Open Edition documentation](https://docs.neptune-software.com/neptune-dxp-open-edition/24/index.html)
+- [Neptune Docker Image](https://hub.docker.com/r/neptunesoftware/planet9)
 - [PostgreSQL Documentation](https://www.postgresql.org/docs/)
