@@ -1,15 +1,13 @@
-# neptune-resources
+# Neptune DXP - Open Edition Resources
 
-Local development environment for Neptune DXP (Planet9) with PostgreSQL database.
+This repository contains the required development resources and setup process.
 
 ## Prerequisites
-
 - [Docker](https://docs.docker.com/get-docker/) installed and running
 - [Docker Compose](https://docs.docker.com/compose/install/) installed (usually included with Docker Desktop)
-- At least 4GB of available RAM
-- Ports 5432 and 8080 available on your local machine
+- Extract the licence
 
-## Local Development Setup
+## Start Local Development Environment 
 
 ### 1. Clone the Repository
 
@@ -26,25 +24,15 @@ Navigate to the local development directory:
 cd local-development
 ```
 
-The `.env` file contains all configuration variables. You can modify these values as needed:
-
-```bash
-# View current configuration
-cat .env
-
-# Edit configuration (optional)
-nano .env  # or use your preferred editor
-```
+The `.env` file contains all configuration variables. You can modify these values as needed.
 
 ### 3. Start the Development Environment
 
 Start all services (PostgreSQL database and Neptune DXP):
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
-
-The `-d` flag runs the containers in detached mode (in the background).
 
 ### 4. Verify Services are Running
 
@@ -73,31 +61,13 @@ docker-compose logs -f db
 
 Press `Ctrl+C` to stop following logs.
 
-## Accessing the Application
+### Accessing the Application
 
 Once the services are running:
 
 - **Neptune DXP Cockpit**: http://localhost:8080
 - **PostgreSQL Database**: `localhost:5432`
 
-### Default Credentials
-
-**Neptune DXP Admin Login:**
-- Username: `admin`
-- Password: `admin123`
-
-**PostgreSQL Database:**
-- Host: `localhost`
-- Port: `5432`
-- Database: `Planet9`
-- Username: `myuser`
-- Password: `mypassword`
-
-> ⚠️ **Security Note**: These are development credentials only. Never use these in production!
-
-## Managing the Development Environment
-
-**Note**: All commands below should be run from the `local-development` directory.
 
 ### Stop Services
 
@@ -135,99 +105,6 @@ docker-compose down -v
 
 ⚠️ **Warning**: This removes all data including the PostgreSQL database!
 
-## Troubleshooting
-
-### Port Already in Use
-
-If you get an error about ports 5432 or 8080 being in use:
-
-1. Check what's using the port:
-   ```bash
-   # On Linux/Mac
-   lsof -i :8080
-   lsof -i :5432
-   
-   # On Windows (PowerShell)
-   netstat -ano | findstr :8080
-   netstat -ano | findstr :5432
-   ```
-
-2. Stop the conflicting service or modify the port settings in `local-development/.env`:
-   ```bash
-   # Edit the .env file and change POSTGRES_PORT or NEPTUNE_PORT
-   nano local-development/.env
-   ```
-
-### Services Won't Start
-
-1. Check Docker is running:
-   ```bash
-   docker info
-   ```
-
-2. Check available disk space:
-   ```bash
-   docker system df
-   ```
-
-3. View detailed logs:
-   ```bash
-   cd local-development
-   docker-compose logs
-   ```
-
-### Reset Everything
-
-To completely reset the development environment:
-
-```bash
-cd local-development
-docker-compose down -v
-docker-compose up -d
-```
-
-## Project Structure
-
-```
-neptune-resources/
-├── local-development/
-│   ├── docker-compose.yaml   # Docker Compose configuration
-│   ├── .env                   # Environment variables (not in git)
-│   └── .env.example          # Environment variables template
-└── README.md                  # This file
-```
-
-## Environment Variables
-
-All configuration is managed through the `.env` file in the `local-development` directory:
-
-| Variable | Description | Default Value |
-|----------|-------------|---------------|
-| `POSTGRES_USER` | PostgreSQL username | `myuser` |
-| `POSTGRES_PASSWORD` | PostgreSQL password | `mypassword` |
-| `POSTGRES_DB` | PostgreSQL database name | `Planet9` |
-| `POSTGRES_PORT` | PostgreSQL host port | `5432` |
-| `NEPTUNE_VERSION` | Neptune DXP Docker image version | `v24.12.1` |
-| `NEPTUNE_PORT` | Neptune DXP host port | `8080` |
-| `NEPTUNE_ADMIN_PASSWORD` | Initial admin password for Neptune DXP | `admin123` |
-
-To customize your environment:
-1. Edit the `.env` file in the `local-development` directory
-2. Restart the services: `docker-compose restart`
-
-## Services Overview
-
-### PostgreSQL Database (`db`)
-- **Image**: `postgres:latest`
-- **Container Name**: `postgres_db`
-- **Port**: 5432
-- **Data Persistence**: Uses Docker volume `postgres_data`
-
-### Neptune DXP (`neptune`)
-- **Image**: `neptunesoftware/planet9:v24.12.1`
-- **Container Name**: `neptune_dxp`
-- **Port**: 8080
-- **Dependencies**: Requires PostgreSQL database to be running
 
 ## Additional Resources
 
