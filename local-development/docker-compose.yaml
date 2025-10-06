@@ -16,6 +16,8 @@ services:
     volumes:
       # Mount volume to persistent data storage
       - postgres_data:/var/lib/postgresql/data
+      # This volume mounts the init script for schema/table creation
+      - ./init-scripts:/docker-entrypoint-initdb.d 
 
   # 2. Neptune DXP - Open Edition (Planet9) Service
   neptune:
