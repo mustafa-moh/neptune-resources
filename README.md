@@ -33,6 +33,9 @@ cd local-development
 ```
 
 The `.env` file contains all configuration variables. You can modify these values as needed.
+```bash
+cp .env.example .env
+```
 
 ### 3. Start the Development Environment
 
