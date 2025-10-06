@@ -12,11 +12,14 @@ Before you can use Neptune DXP locally, you need to obtain a trial license from 
 
 1. Visit the **[Neptune DXP Free Trial page](https://www.neptune-software.com/free-trial/)**
 
-2. Fill out the form data. Then you will receive an email with the Neptune portal link to register there.
-<!-- Add screenshot: ![Registration Form](docs/images/step1-registration-form.png) -->
+2. Fill out the form data.
+3. Then you will receive an email with the Neptune portal link.
+![Registration Form](images/dxp-portal-request-trial.png)
+4. Click on Register on the portal as well.
+5. Once registration is completed, you will receive an email with your password.
+
 
 ### Step 2: Request Your Trial License
-
 1. Once logged in to the Portal, and reset your initial password.
 2. From the landing page, Click on the **Request Your Trial License** tile.
 ![Request Trial License Tile](images/dxp-portal-request-trial.png)
