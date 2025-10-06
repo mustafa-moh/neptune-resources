@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  # 1. PostgreSQL Database Service
+  db:
+    image: postgres:latest
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      # Host:Container
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      # Mount volume to persistent data storage
+      - postgres_data:/var/lib/postgresql/data
+
+  # 2. Neptune DXP - Open Edition (Planet9) Service
+  neptune:
+    image: neptunesoftware/planet9:${NEPTUNE_VERSION}
+    container_name: neptune_dxp
+    restart: always
+    depends_on:
+      - db
+    environment:
+      # --- Neptune DXP Configuration ---
+      PORT: ${NEPTUNE_PORT}
+      INITIAL_ADMIN_PASSWORD: ${NEPTUNE_ADMIN_PASSWORD}
+      
+      # --- Database Connection Settings ---
+      DB_TYPE: postgresql
+      DB_PSQL_HOST: db
+      DB_PSQL_PORT: 5432
+      DB_PSQL_USER: ${POSTGRES_USER}
+      DB_PSQL_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_PSQL_DBNAME: ${POSTGRES_DB}
+    ports:
+      # Host:Container - access Neptune DXP Cockpit/Apps on 8080
+      - "${NEPTUNE_PORT}:${NEPTUNE_PORT}"
+
+
+volumes:
+  postgres_data:
