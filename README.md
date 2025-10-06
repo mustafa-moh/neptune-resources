@@ -3,9 +3,17 @@
 This repository contains the required development resources and setup process.
 
 ## Prerequisites
-- [Docker](https://docs.docker.com/get-docker/) installed and running
-- [Docker Compose](https://docs.docker.com/compose/install/) installed (usually included with Docker Desktop)
-- Extract the licence
+
+Before setting up your local development environment, ensure you have:
+
+1. **Docker & Docker Compose**
+   - [Docker](https://docs.docker.com/get-docker/) installed and running
+   - [Docker Compose](https://docs.docker.com/compose/install/) installed (usually included with Docker Desktop)
+
+2. **Neptune DXP Trial License**
+   - You need a valid trial license to activate Neptune DXP
+   - 📋 **[Follow the Trial License Setup Guide](TRIAL_LICENSE_SETUP.md)** to obtain your license
+   - This is a free process that takes just a few minutes
 
 ## Start Local Development Environment 
 
@@ -67,6 +75,9 @@ Once the services are running:
 
 - **Neptune DXP Cockpit**: http://localhost:8080
 - **PostgreSQL Database**: `localhost:5432`
+
+**First Time Access:**
+When you first access the Neptune DXP Cockpit, you'll be prompted to enter your trial license. Have your Trial License ID ready (from the [Trial License Setup Guide](TRIAL_LICENSE_SETUP.md)).
 
 
 ### Stop Services
