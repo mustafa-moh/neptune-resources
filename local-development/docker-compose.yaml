@@ -19,13 +19,24 @@ services:
       # This volume mounts the init script for schema/table creation
       - ./init-scripts:/docker-entrypoint-initdb.d 
 
-  # 2. Neptune DXP - Open Edition (Planet9) Service
+  # 2. Redis Cache Service
+  redis:
+    image: redis:latest
+    container_name: redis_cache
+    restart: always
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+
+  # 3. Neptune DXP - Open Edition (Planet9) Service
   neptune:
     image: neptunesoftware/planet9:${NEPTUNE_VERSION}
     container_name: neptune_dxp
     restart: always
     depends_on:
       - db
+      - redis
     environment:
       # --- Neptune DXP Configuration ---
       PORT: ${NEPTUNE_PORT}
@@ -38,6 +49,7 @@ services:
       DB_PSQL_USER: ${POSTGRES_USER}
       DB_PSQL_PASSWORD: ${POSTGRES_PASSWORD}
       DB_PSQL_DBNAME: ${POSTGRES_DB}
+      DB_URI_REDIS: redis://redis:6379
     ports:
       # Host:Container - access Neptune DXP Cockpit/Apps on 8080
       - "${NEPTUNE_PORT}:${NEPTUNE_PORT}"
@@ -45,3 +57,4 @@ services:
 
 volumes:
   postgres_data:
+  redis_data:
