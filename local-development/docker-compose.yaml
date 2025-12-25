@@ -11,13 +11,11 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     ports:
-      # Host:Container
       - "${POSTGRES_PORT}:5432"
     volumes:
-      # Mount volume to persistent data storage
-      - postgres_data:/var/lib/postgresql/data
-      # This volume mounts the init script for schema/table creation
-      - ./init-scripts:/docker-entrypoint-initdb.d 
+      # Mount volume at /var/lib/postgresql for Postgres 18+
+      - postgres_data:/var/lib/postgresql
+      - ./init-scripts:/docker-entrypoint-initdb.d
 
   # 2. Redis Cache Service
   redis:
@@ -38,11 +36,8 @@ services:
       - db
       - redis
     environment:
-      # --- Neptune DXP Configuration ---
       PORT: ${NEPTUNE_PORT}
       INITIAL_ADMIN_PASSWORD: ${NEPTUNE_ADMIN_PASSWORD}
-      
-      # --- Database Connection Settings ---
       DB_TYPE: postgresql
       DB_PSQL_HOST: db
       DB_PSQL_PORT: 5432
@@ -50,10 +45,15 @@ services:
       DB_PSQL_PASSWORD: ${POSTGRES_PASSWORD}
       DB_PSQL_DBNAME: ${POSTGRES_DB}
       DB_URI_REDIS: redis://redis:6379
+      # Vault configuration
+      VAULT_ENABLED: ${VAULT_ENABLED:-true}
+      VAULT_PRIVATE_KEY: ${VAULT_PRIVATE_KEY:-/run/vault-keys/vault}
+      VAULT_PUBLIC_KEY: ${VAULT_PUBLIC_KEY:-/run/vault-keys/vault.pem}
     ports:
-      # Host:Container - access Neptune DXP Cockpit/Apps on 8080
       - "${NEPTUNE_PORT}:${NEPTUNE_PORT}"
-
+    volumes:
+      # Bind-mount Vault keypair directory into the container read-only
+      - ${VAULT_KEYS_HOST_DIR:-./vault-keys}:/run/vault-keys:ro
 
 volumes:
   postgres_data:

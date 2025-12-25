@@ -37,6 +37,24 @@ The `.env` file contains all configuration variables. You can modify these value
 cp .env.example .env
 ```
 
+### (Optional) Initialize Vault (Keys and .env)
+
+Run the init script to generate the Vault RSA keypair and optionally update your `.env` or create a `.env.example`:
+
+```powershell
+# Generate keys in ./vault-keys (no overwrite)
+pwsh -File scripts/init-vault.ps1
+
+# Generate keys and update .env with VAULT_* (absolute host path included)
+pwsh -File scripts/init-vault.ps1 -UpdateEnv
+
+# Also write a .env.example template
+pwsh -File scripts/init-vault.ps1 -WriteExample
+
+# Overwrite existing keys if needed
+pwsh -File scripts/init-vault.ps1 -Force
+```
+
 ### 3. Start the Development Environment
 
 Start all services (PostgreSQL database and Neptune DXP):
