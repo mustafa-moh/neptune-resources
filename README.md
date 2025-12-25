@@ -43,16 +43,16 @@ Run the init script to generate the Vault RSA keypair and optionally update your
 
 ```powershell
 # Generate keys in ./vault-keys (no overwrite)
-pwsh -File scripts/init-vault.ps1
+pwsh -File local-development/scripts/init-vault.ps1
 
 # Generate keys and update .env with VAULT_* (absolute host path included)
-pwsh -File scripts/init-vault.ps1 -UpdateEnv
+pwsh -File local-development/scripts/init-vault.ps1 -UpdateEnv
 
 # Also write a .env.example template
-pwsh -File scripts/init-vault.ps1 -WriteExample
+pwsh -File local-development/scripts/init-vault.ps1 -WriteExample
 
 # Overwrite existing keys if needed
-pwsh -File scripts/init-vault.ps1 -Force
+pwsh -File local-development/scripts/init-vault.ps1 -Force
 ```
 
 ### 3. Start the Development Environment
